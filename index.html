@@ -1226,7 +1226,7 @@ const TRAIL = (() => {
 const API_URL = 'https://script.google.com/macros/s/AKfycbzNiIeO30zc3qXyiiYdv9cqwleSFu0pJmxet02H_nJKbJyZWSgvbqyG8l8fPCGrF8CQ/exec';
 const API = (() => {
   // GitHub Pages（或 ?live=1）：用 fetch 呼叫 Apps Script 資料介面
-  const http = /github\.io$|35interactive\.com$/.test(location.hostname) || /[?&]live=1/.test(location.search);
+  const http = /github\.io$/.test(location.hostname) || !!window.Capacitor || /[?&]live=1/.test(location.search);  // Capacitor＝iPhone App 版
   if (http) {
     const post = (fn, args) => fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fn, args }) })
       .then(r => r.json()).then(d => { if (!d.ok) throw new Error(d.error); return d.data; });

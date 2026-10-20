@@ -1,5 +1,5 @@
 // 離線快取：網站本身和圖片存在手機，山上沒訊號也打得開
-const CACHE = 'tgt-cca7ae0b11';
+const CACHE = 'tgt-d2ae87d690';
 const FILES = ["./", "index.html", "manifest.webmanifest", "img/bike.webp", "img/bird_b.webp", "img/bird_b2.webp", "img/bird_y.webp", "img/bird_y2.webp", "img/buffalo.webp", "img/cloud_a.webp", "img/cloud_b.webp", "img/egret.webp", "img/footer.jpg", "img/gondola.webp", "img/hiker_back.webp", "img/hiker_point.webp", "img/hiker_sit.webp", "img/hiker_wave.webp", "img/hikers.webp", "img/icon-180.png", "img/icon-192.png", "img/icon-512.png", "img/lm_101.webp", "img/lm_hotel.webp", "img/lm_temple.webp", "img/magpie_fly.webp", "img/magpie_perch.webp", "img/map.jpg", "img/mtn_l.webp", "img/mtn_r.webp", "img/s1.jpg", "img/s2.jpg", "img/s3.jpg", "img/s4.jpg", "img/s5.jpg", "img/s6.jpg", "img/s7.jpg", "img/s8.jpg", "img/slide1.jpg", "img/slide2.jpg", "img/slide3.jpg", "img/slide4.jpg", "img/steam_a.webp", "img/steam_b.webp", "img/steam_c.webp", "img/tea.webp"];
 const RUNTIME = 'tgt-runtime';
 
