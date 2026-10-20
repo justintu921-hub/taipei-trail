@@ -1215,7 +1215,9 @@ const TRAIL = (() => {
   function totals() {
     const t = {};
     Object.keys(PEOPLE).forEach(w => t[w] = { steps: 0, floors: 0 });
-    Object.keys(DB.kv).forEach(k => { const m = k.match(/^health:(\d{4}-\d{2}-\d{2}):(\w+)$/); if (m && t[m[2]]) { const v = DB.kv[k].v; t[m[2]].steps += num(v.steps); t[m[2]].floors += num(v.floors); } });
+    // 只算健行那幾天（每段的完成日或預定日），平常測試按到的不算
+    const days = new Set(SECTIONS.map(dayOf));
+    Object.keys(DB.kv).forEach(k => { const m = k.match(/^health:(\d{4}-\d{2}-\d{2}):(\w+)$/); if (m && t[m[2]] && days.has(m[1])) { const v = DB.kv[k].v; t[m[2]].steps += num(v.steps); t[m[2]].floors += num(v.floors); } });
     return t;
   }
 
