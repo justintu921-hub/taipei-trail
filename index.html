@@ -486,21 +486,11 @@ body.ro textarea{pointer-events:none;background:transparent}
         <li>每段 7 顆寶石，經過時 APP 會自動收集</li>
         <li>分兩次走完同一段也可以，每次都要儲存並上傳紀錄</li>
         <li>收到寶石就回來這裡點亮，各自記自己的</li></ul></details>
-      <details><summary>⌚ 上傳健康數據（iPhone 捷徑）</summary>
-        <p>走完那天按一下捷徑，就會把當天的步數、距離、爬升樓層、卡路里傳到網站，顯示在那一段的「運動數據」。第一次要自己建，約 5 分鐘：</p>
-        <ol class="guide-steps">
-          <li>打開「捷徑」App，按右上「＋」新增，名稱取「上傳縱走數據」</li>
-          <li>加入動作「文字」，內容打 <b>justin</b>（Daisy 打 <b>daisy</b>），再加「設定變數」，變數名稱「身分」</li>
-          <li>加入「尋找健康樣本」，類型選「步數」，加篩選「開始日期」是「今天」；接著加「計算統計資料」選「總和」，再「設定變數」叫「步數」</li>
-          <li>同樣的方法再做三次：「步行 + 跑步距離」存成「距離」、「已爬樓層」存成「樓層」、「活動能量」存成「大卡」</li>
-          <li>加入「格式化日期」：日期選「目前日期」，日期格式選「自訂」，填 <b>yyyy-MM-dd</b>，再「設定變數」叫「日期」</li>
-          <li>加入「文字」，貼上下面這段，把中括號的地方換成對應的變數（點一下「選取變數」）：
-            <span class="code">{"fn":"setKeys","args":[[["health:[日期]:[身分]",{"steps":"[步數]","km":"[距離]","floors":"[樓層]","kcal":"[大卡]"}]],"[身分]"]}</span></li>
-          <li>加入「取得 URL 的內容」，網址貼上：<span class="code">https://script.google.com/macros/s/AKfycbzNiIeO30zc3qXyiiYdv9cqwleSFu0pJmxet02H_nJKbJyZWSgvbqyG8l8fPCGrF8CQ/exec</span>展開設定：方法選「POST」，要求本文選「檔案」，檔案選上一步的「文字」</li>
-          <li>加入「顯示通知」，內容打「已上傳今天的縱走數據」</li>
-          <li>第一次執行會問能不能讀取健康資料，選允許</li>
-        </ol>
-        <p>分享給 Daisy：在捷徑上長按 → 分享 →「拷貝 iCloud 連結」傳給她，她只要把第 2 步的 justin 改成 daisy。</p></details>
+      <details><summary>⌚ 上傳健康數據（iPhone 捷徑）</summary><ul>
+        <li>捷徑「上傳縱走數據」已經做好了，Justin 會用 AirDrop 傳給你，打開後按「加入捷徑」</li>
+        <li>走完那天按一下捷徑：它會讀今天的步數、距離、爬升樓層、活動消耗，打開這個網站並自動記錄，畫面下方會跳出「已記錄」</li>
+        <li>第一次執行會問能不能讀取健康資料、能不能打開網站，都選允許</li>
+        <li>數據是當天一整天的總和，有戴 Apple Watch 會更準</li></ul></details>
       <details><summary>🎁 全部走完</summary><ul>
         <li>8 段集滿後在 APP 裡報名、填資料，系統會自動驗證</li>
         <li>兌換期限：<b>2027/1/15</b>（只算 2026/12/31 前走完的段落）</li>
