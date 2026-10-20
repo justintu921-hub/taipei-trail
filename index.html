@@ -388,6 +388,8 @@ textarea:focus,.food input:focus,input[type=date]:focus{outline:2px solid var(--
 .guide-steps li{margin:6px 0}
 .code{display:block;background:#F4F1E4;border-radius:10px;padding:8px 10px;font:12px/1.5 monospace;word-break:break-all;color:var(--brown);user-select:all;margin-top:4px}
 
+.toast{position:fixed;z-index:80;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translate(-50%,20px);opacity:0;transition:all .35s;background:var(--brown);color:#fff;border-radius:16px;padding:12px 18px;font-size:14px;max-width:calc(100% - 32px);box-shadow:0 8px 24px -8px rgba(0,0,0,.4)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
 /* 慶祝、照片檢視、選身分 */
 #party,#viewer,#whobox{position:fixed;inset:0;z-index:60;display:none;place-items:center}
 #party.on,#viewer.on,#whobox.on{display:grid}
@@ -1709,6 +1711,11 @@ function initSlides() {
   setInterval(() => { if (document.hidden) return; all[cur].classList.remove('on'); cur = (cur + 1) % all.length; all[cur].classList.add('on'); }, 6500);
 }
 
+function toast(msg) {
+  const el = document.createElement('div'); el.className = 'toast'; el.textContent = msg; document.body.appendChild(el);
+  setTimeout(() => el.classList.add('on'), 30); setTimeout(() => { el.classList.remove('on'); setTimeout(() => el.remove(), 400); }, 6000);
+}
+
 function init() {
   document.querySelectorAll('[data-illu]').forEach(img => { img.src = ILLU[img.dataset.illu]; });
   $('#foot-bg').src = PHOTOS.footer;
@@ -1737,11 +1744,22 @@ function init() {
   document.addEventListener('visibilitychange', () => { if (!document.hidden) pull(); });
   // 手機瀏覽器不讓 Google 的框架記住資料：身分改從網址帶（?who=justin / daisy / guest）
   const setWho = (w) => { if (w && (PEOPLE[w] || w === 'guest')) { ME = w; try { localStorage.setItem('tgt_who', ME); } catch (e) { } $('#whobox').classList.remove('on'); render(); return true; } return false; };
+  // iPhone 捷徑會帶著今天的健康數據打開網站：?who=justin&steps=..&km=..&floors=..&kcal=..
+  const qs = new URLSearchParams(location.search);
+  const takeHealth = () => {
+    if (!qs.has('steps') || !canEdit()) return;
+    const n = (k) => { const v = parseFloat(String(qs.get(k) || '').replace(/[^0-9.\-]/g, '')); return isFinite(v) ? v : 0; };
+    const h = { steps: Math.round(n('steps')), km: Math.round(n('km') * 100) / 100, floors: Math.round(n('floors')), kcal: Math.round(n('kcal')) };
+    put([[`health:${today()}:${ME}`, h]]);
+    toast(`已記錄 ${PEOPLE[ME].name} 今天的運動數據：${h.steps.toLocaleString()} 步・${h.km} 公里・${h.floors} 層樓`);
+    try { history.replaceState(null, '', location.pathname + '?who=' + ME); } catch (e) { }
+  };
   if (typeof google !== 'undefined' && google.script && google.script.url) {
     google.script.url.getLocation(loc => { if (!setWho(loc && loc.parameter && loc.parameter.who) && !ME) askWho(); });
   } else {
-    const w = new URLSearchParams(location.search).get('who');
+    const w = qs.get('who');
     if (!setWho(w) && !ME) askWho();
+    takeHealth();
   }
   const h = location.hash.slice(1); if (SECTIONS.some(s => s.id === h)) openSheet(h);
 }
